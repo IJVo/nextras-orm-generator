@@ -19,9 +19,13 @@ class ColumnDocumentor implements IDecorator
 	/** @var IEntityResolver */
 	private $resolver;
 
-	public function __construct(IEntityResolver $resolver)
+	/** @var bool */
+	private $generateRelations;
+
+	public function __construct(IEntityResolver $resolver, bool $generateRelations)
 	{
 		$this->resolver = $resolver;
+		$this->generateRelations = $generateRelations;
 	}
 
 	public function doDecorate(Column $column, ClassType $class, PhpNamespace $namespace): void
@@ -52,7 +56,7 @@ class ColumnDocumentor implements IDecorator
 		}
 
 		// Relations
-		if (($key = $column->getForeignKey()) !== null) {
+		if ($this->generateRelations && ($key = $column->getForeignKey()) !== null) {
 			// Find foreign entity table
 			$ftable = $column->getTable()->getDatabase()->getForeignTable($key->getReferenceTable());
 
@@ -104,6 +108,10 @@ class ColumnDocumentor implements IDecorator
 	 */
 	protected function getRealUse(Table $table, PhpNamespace $namespace)
 	{
+		if ($namespace->getName() === $this->resolver->resolveEntityNamespace($table)) {
+			return null;
+		}
+
 		$use = $namespace->unresolveName(
 			$this->resolver->resolveEntityNamespace($table) . Helpers::NS . $this->resolver->resolveEntityName($table)
 		);

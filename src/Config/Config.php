@@ -32,6 +32,7 @@ class Config implements ArrayAccess
 		'nextras.orm.class.entity' => 'Nextras\Orm\Entity\Entity',
 		'nextras.orm.class.repository' => 'Nextras\Orm\Repository\Repository',
 		'nextras.orm.class.mapper' => 'Nextras\Orm\Mapper\Mapper',
+		'nextras.orm.class.model' => 'Nextras\Orm\Model\Model',
 		// ORM
 		'orm.namespace' => null,
 		'orm.singularize' => false,
@@ -43,6 +44,7 @@ class Config implements ArrayAccess
 		'entity.name.singularize' => false,
 		'entity.filename.suffix' => null,
 		'entity.generate.column.constant' => false,
+		'entity.generate.relations' => false,
 		'entity.column.constants.prefix' => 'COL_',
 		// Repository
 		'repository.folder' => null,
@@ -65,8 +67,13 @@ class Config implements ArrayAccess
 		'facade.name.suffix' => null,
 		'facade.name.singularize' => false,
 		'facade.filename.suffix' => null,
+		// model
+		'model.folder' => null,
+		'model.namespace' => null,
+		'model.extends' => null,
+		'model.name' => null,
+		'model.filename' => null,
 
-		'nextras.orm.class.model' => 'Nextras\Orm\Model\Model',
 	];
 
 	/** @var mixed[] */
